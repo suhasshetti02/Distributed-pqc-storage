@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  node1:
+    build: .
+    container_name: hydrastore_node1
+    command: >
+      -mode single 
+      -node-id node1 
+      -node-addr :3000 
+      -bootstrap 10.5.0.12:3000,10.5.0.13:3000,10.5.0.14:3000,10.5.0.15:3000 
+      -api :8080
+    networks:
+      hydra_net:
+        ipv4_address: 10.5.0.11
+    ports:
+      - "8080:8080"
+    environment:
+      - DFS_MASTER_KEY=${DFS_MASTER_KEY:-12345678901234567890123456789012}
+      - DFS_API_KEY=${DFS_API_KEY:-dev-api-key}
+
+  node2:
+    build: .
+    container_name: hydrastore_node2
+    command: >
+      -mode single 
+      -node-id node2 
+      -node-addr :3000 
+      -bootstrap 10.5.0.11:3000,10.5.0.13:3000,10.5.0.14:3000,10.5.0.15:3000
+      -api :8081
+    networks:
+      hydra_net:
+        ipv4_address: 10.5.0.12
+    ports:
+      - "8081:8081"
+    environment:
+      - DFS_MASTER_KEY=${DFS_MASTER_KEY:-12345678901234567890123456789012}
+      - DFS_API_KEY=${DFS_API_KEY:-dev-api-key}
+
+  node3:
+    build: .
+    container_name: hydrastore_node3
+    command: >
+      -mode single 
+      -node-id node3 
+      -node-addr :3000 
+      -bootstrap 10.5.0.11:3000,10.5.0.12:3000,10.5.0.14:3000,10.5.0.15:3000
+      -api :8082
+    networks:
+      hydra_net:
+        ipv4_address: 10.5.0.13
+    ports:
+      - "8082:8082"
+    environment:
+      - DFS_MASTER_KEY=${DFS_MASTER_KEY:-12345678901234567890123456789012}
+      - DFS_API_KEY=${DFS_API_KEY:-dev-api-key}
+
+  node4:
+    build: .
+    container_name: hydrastore_node4
+    command: >
+      -mode single 
+      -node-id node4 
+      -node-addr :3000 
+      -bootstrap 10.5.0.11:3000,10.5.0.12:3000,10.5.0.13:3000,10.5.0.15:3000
+      -api :8083
+    networks:
+      hydra_net:
+        ipv4_address: 10.5.0.14
+    ports:
+      - "8083:8083"
+    environment:
+      - DFS_MASTER_KEY=${DFS_MASTER_KEY:-12345678901234567890123456789012}
+      - DFS_API_KEY=${DFS_API_KEY:-dev-api-key}
+
+  node5:
+    build: .
+    container_name: hydrastore_node5
+    command: >
+      -mode single 
+      -node-id node5 
+      -node-addr :3000 
+      -bootstrap 10.5.0.11:3000,10.5.0.12:3000,10.5.0.13:3000,10.5.0.14:3000
+      -api :8084
+    networks:
+      hydra_net:
+        ipv4_address: 10.5.0.15
+    ports:
+      - "8084:8084"
+    environment:
+      - DFS_MASTER_KEY=${DFS_MASTER_KEY:-12345678901234567890123456789012}
+      - DFS_API_KEY=${DFS_API_KEY:-dev-api-key}
+
+networks:
+  hydra_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16

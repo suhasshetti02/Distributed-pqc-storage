@@ -1,0 +1,9 @@
+data/
+recovered_media/
+test_media/
+test_system.ps1
+dfs_meta.db
+hydrastore
+.git/
+.vscode/
+.idea/

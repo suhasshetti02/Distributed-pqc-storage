@@ -1,0 +1,28 @@
+# Binaries
+hydrastore
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Storage & Data
+dfs_meta.db
+dfs_meta.db-journal
+test_media/
+recovered_media/
+network_data/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+go.sum
