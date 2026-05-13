@@ -49,7 +49,7 @@ Native **Content-Aware Storage (CAS)** deduplicates files at the gateway level. 
 
 ---
 
-## 📊 Verified Performance Metrics
+## 📊 Verified Performance Metrics ( Tested on 65MB video file)
 *Extracted from the [Performance Audit Suite](benchmark.ps1)*
 
 | Metric | Measured Value | Analysis |
