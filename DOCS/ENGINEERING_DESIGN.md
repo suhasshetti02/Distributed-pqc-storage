@@ -1,8 +1,7 @@
-# Engineering Design Doc: HydraStore Distributed Storage Fabric
-**Author**: [Your Name/Team] | **Status**: Production-Ready | **Revision**: 1.1
+# Engineering Design Doc: Hydra-PQC Distributed Storage Fabric
 
 ## 1. Executive Summary
-HydraStore is a post-quantum secure, self-healing distributed file storage system designed for high availability and zero-trust environments. It utilizes 3+2 Reed-Solomon erasure coding to provide 40% fault tolerance and leverages ML-KEM-768 for cryptographic resistance against future quantum-computational threats.
+Hydra-PQC is a post-quantum secure, self-healing distributed file storage system designed for high availability and zero-trust environments. It utilizes 3+2 Reed-Solomon erasure coding to provide 40% fault tolerance and leverages ML-KEM-768 for cryptographic resistance against future quantum-computational threats.
 
 ## 3. Implementation Details
 
