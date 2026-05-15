@@ -45,8 +45,7 @@ A background **Fabric Audit Engine** constantly monitors mesh health. If a node 
 3.  Re-distributes them to healthy nodes to restore 100% redundancy.
 
 ### 4. Storage Efficiency (CAS)
-Native **Content-Aware Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, HydraStore stores only one set of shards, significantly reducing infrastructure costs.
-
+Native **SHA-256 Content-Addressable Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, Hydra-PQC stores only one set of shards, significantly reducing infrastructure costs to a constant O(1) per identical file.
 ---
 
 ## 📊 Verified Performance Metrics ( Tested on 65MB video file)
