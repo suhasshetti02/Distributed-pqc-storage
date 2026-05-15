@@ -1,4 +1,4 @@
-# HydraStore: Post-Quantum Secure Distributed Storage Fabric
+# Hydra-PQC: Post-Quantum Secure Distributed Storage Fabric
 
 [![Status: Production-Ready](https://img.shields.io/badge/Status-Production--Ready-success.svg)]()
 [![Security: ML-KEM-768](https://img.shields.io/badge/Security-ML--KEM--768-blue.svg)]()
@@ -31,7 +31,7 @@ graph TD
 ## 🚀 Key Engineering Pillars
 
 ### 1. Quantum-Resistant Security
-HydraStore is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
+Hydra-PQC is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
 
 ### 2. High-Availability (3+2 Reed-Solomon)
 Data is not simply "copied"—it is mathematically sharded. Using a 3+2 erasure coding scheme, every file is split into 3 data shards and 2 parity shards.
@@ -91,4 +91,4 @@ Open your browser to `http://localhost:8080` to view the **Real-Time Mesh Heatma
 *   **`api_server.go`**: High-performance HTTP Gateway and Dashboard.
 
 ---
-**HydraStore** — *Resilience Through Mathematics. Security Through PQC.*
+**Hydra-PQC** — *Resilience Through Mathematics. Security Through PQC.*
