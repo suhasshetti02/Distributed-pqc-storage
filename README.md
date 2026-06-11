@@ -1,4 +1,4 @@
-# Hydra-PQC: Post-Quantum Secure Distributed Storage Fabric
+# HydraStore: Post-Quantum Secure Distributed Storage Fabric
 
 [![Status: Production-Ready](https://img.shields.io/badge/Status-Production--Ready-success.svg)]()
 [![Security: ML-KEM-768](https://img.shields.io/badge/Security-ML--KEM--768-blue.svg)]()
@@ -24,14 +24,14 @@ graph TD
     end
 
     style GW fill:#00f2fe,stroke:#333,stroke-width:2px,color:#000
-    style Mesh fill:#15171e,stroke:#00f2fe,stroke-dasharray: 5 5
+    style Mesh fill:#15171e,stroke:#00f2fe,stroke-dasharray: 5 5,color:#fff
     style Audit fill:#00ff88,color:#000
 ```
 
 ## 🚀 Key Engineering Pillars
 
 ### 1. Quantum-Resistant Security
-Hydra-PQC is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
+HydraStore is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
 
 ### 2. High-Availability (3+2 Reed-Solomon)
 Data is not simply "copied"—it is mathematically sharded. Using a 3+2 erasure coding scheme, every file is split into 3 data shards and 2 parity shards.
@@ -45,11 +45,12 @@ A background **Fabric Audit Engine** constantly monitors mesh health. If a node 
 3.  Re-distributes them to healthy nodes to restore 100% redundancy.
 
 ### 4. Storage Efficiency (CAS)
-Native **SHA-256 Content-Addressable Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, Hydra-PQC stores only one set of shards, significantly reducing infrastructure costs to a constant O(1) per identical file.
+Native **Content-Aware Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, HydraStore stores only one set of shards, significantly reducing infrastructure costs.
+
 ---
 
-## 📊 Verified Performance Metrics ( Tested on 65MB video file)
-*Extracted from the [Performance Audit Suite benchmark.ps1]*
+## 📊 Verified Performance Metrics
+*Extracted from the [Performance Audit Suite](benchmark.ps1)*
 
 | Metric | Measured Value | Analysis |
 | :--- | :--- | :--- |
@@ -90,4 +91,4 @@ Open your browser to `http://localhost:8080` to view the **Real-Time Mesh Heatma
 *   **`api_server.go`**: High-performance HTTP Gateway and Dashboard.
 
 ---
-**Hydra-PQC** — *Resilience Through Mathematics. Security Through PQC.*
+**HydraStore** — *Resilience Through Mathematics. Security Through PQC.*
