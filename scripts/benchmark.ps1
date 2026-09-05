@@ -1,4 +1,4 @@
-# HydraStore Performance Benchmark Suite
+# Distributed-pqc-storage Performance Benchmark Suite
 # Google SDE Level Diagnostic Tool
 
 $ErrorActionPreference = "Stop"
@@ -45,7 +45,7 @@ try {
 
     # 3. FAULT TOLERANCE AUDIT: Recovery Speed (Degraded State)
     Write-Host "[2/4] Measuring Reconstruction Latency (2 Nodes Offline)..." -ForegroundColor Cyan
-    docker stop hydrastore_node1 hydrastore_node2 | Out-Null
+    docker stop distributed-pqc-storage_node1 distributed-pqc-storage_node2 | Out-Null
     Start-Sleep -Seconds 3
 
     $StartTime = Get-Date
@@ -68,5 +68,5 @@ try {
 finally {
     Write-Host "`n[4/4] Restoring Cluster Fabric..." -ForegroundColor Gray
     Remove-Item "benchmark_recovery.tmp" -ErrorAction SilentlyContinue
-    docker start hydrastore_node1 hydrastore_node2 | Out-Null
+    docker start distributed-pqc-storage_node1 distributed-pqc-storage_node2 | Out-Null
 }

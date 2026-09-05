@@ -1,7 +1,7 @@
-# Engineering Design Doc: Hydra-PQC Distributed Storage Fabric
+# Engineering Design Doc: Distributed-pqc-storage Distributed Storage Fabric
 
 ## 1. Executive Summary
-Hydra-PQC is a post-quantum secure, self-healing distributed file storage system designed for high availability and zero-trust environments. It utilizes 3+2 Reed-Solomon erasure coding to provide 40% fault tolerance and leverages ML-KEM-768 for cryptographic resistance against future quantum-computational threats.
+Distributed-pqc-storage is a post-quantum secure, self-healing distributed file storage system designed for high availability and zero-trust environments. It utilizes 3+2 Reed-Solomon erasure coding to provide 40% fault tolerance and leverages ML-KEM-768 for cryptographic resistance against future quantum-computational threats.
 
 ## 3. Implementation Details
 
@@ -37,7 +37,7 @@ graph TD
 ## 4. Autonomous Operations
 
 ### 4.1 Active Self-Healing
-HydraStore implements a background **Audit Engine** that runs every 30 seconds.
+Distributed-pqc-storage implements a background **Audit Engine** that runs every 30 seconds.
 1.  **Detection**: Identifies files where shards are located on unreachable nodes.
 2.  **Reconstruction**: Automatically pulls surviving shards and reconstructs the missing ones in memory.
 3.  **Re-balancing**: Distributes new shards to healthy nodes to restore the 3+2 redundancy level automatically.

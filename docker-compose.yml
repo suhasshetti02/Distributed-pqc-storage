@@ -3,7 +3,7 @@ version: '3.8'
 services:
   node1:
     build: .
-    container_name: hydrastore_node1
+    container_name: distributed-pqc-storage_node1
     command: >
       -mode single 
       -node-id node1 
@@ -21,7 +21,7 @@ services:
 
   node2:
     build: .
-    container_name: hydrastore_node2
+    container_name: distributed-pqc-storage_node2
     command: >
       -mode single 
       -node-id node2 
@@ -39,7 +39,7 @@ services:
 
   node3:
     build: .
-    container_name: hydrastore_node3
+    container_name: distributed-pqc-storage_node3
     command: >
       -mode single 
       -node-id node3 
@@ -57,7 +57,7 @@ services:
 
   node4:
     build: .
-    container_name: hydrastore_node4
+    container_name: distributed-pqc-storage_node4
     command: >
       -mode single 
       -node-id node4 
@@ -75,7 +75,7 @@ services:
 
   node5:
     build: .
-    container_name: hydrastore_node5
+    container_name: distributed-pqc-storage_node5
     command: >
       -mode single 
       -node-id node5 

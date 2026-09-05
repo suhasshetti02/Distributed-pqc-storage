@@ -1,11 +1,11 @@
-# Hydra-PQC: Operations & Deployment Guide
+# Distributed-pqc-storage: Operations & Deployment Guide
 
-This guide provides technical instructions for deploying, managing, and testing the HydraStore Distributed Mesh.
+This guide provides technical instructions for deploying, managing, and testing the Distributed-pqc-storage Distributed Mesh.
 
 ## 1. Project Folder Structure
 
 ```text
-Hydra-PQC/
+Distributed-pqc-storage/
 ├── README.md               # High-level overview & metrics
 ├── ENGINEERING_DESIGN.md   # Architectural & Cryptographic specs
 ├── OPERATIONS_GUIDE.md     # Setup and Command reference

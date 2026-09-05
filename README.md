@@ -1,10 +1,10 @@
-# HydraStore: Post-Quantum Secure Distributed Storage Fabric
+# Distributed-pqc-storage: Post-Quantum Secure Distributed Storage Fabric
 
 [![Status: Production-Ready](https://img.shields.io/badge/Status-Production--Ready-success.svg)]()
 [![Security: ML-KEM-768](https://img.shields.io/badge/Security-ML--KEM--768-blue.svg)]()
 [![Resilience: Reed-Solomon 3+2](https://img.shields.io/badge/Resilience-RS--3%2B2-orange.svg)]()
 
-HydraStore is a zero-trust, self-healing distributed storage system designed to withstand the next generation of cryptographic and infrastructure threats. Built with Go and Docker, it provides high-availability storage with integrated **Post-Quantum Cryptography (PQC)** and autonomous **Self-Healing** capabilities.
+Distributed-pqc-storage is a zero-trust, self-healing distributed storage system designed to withstand the next generation of cryptographic and infrastructure threats. Built with Go and Docker, it provides high-availability storage with integrated **Post-Quantum Cryptography (PQC)** and autonomous **Self-Healing** capabilities.
 
 ## 📐 System Architecture
 
@@ -31,7 +31,7 @@ graph TD
 ## 🚀 Key Engineering Pillars
 
 ### 1. Quantum-Resistant Security
-HydraStore is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
+Distributed-pqc-storage is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
 
 ### 2. High-Availability (3+2 Reed-Solomon)
 Data is not simply "copied"—it is mathematically sharded. Using a 3+2 erasure coding scheme, every file is split into 3 data shards and 2 parity shards.
@@ -45,7 +45,7 @@ A background **Fabric Audit Engine** constantly monitors mesh health. If a node 
 3.  Re-distributes them to healthy nodes to restore 100% redundancy.
 
 ### 4. Storage Efficiency (CAS)
-Native **Content-Aware Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, HydraStore stores only one set of shards, significantly reducing infrastructure costs.
+Native **Content-Aware Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, Distributed-pqc-storage stores only one set of shards, significantly reducing infrastructure costs.
 
 ---
 
@@ -91,4 +91,4 @@ Open your browser to `http://localhost:8080` to view the **Real-Time Mesh Heatma
 *   **`api_server.go`**: High-performance HTTP Gateway and Dashboard.
 
 ---
-**HydraStore** — *Resilience Through Mathematics. Security Through PQC.*
+**Distributed-pqc-storage** — *Resilience Through Mathematics. Security Through PQC.*

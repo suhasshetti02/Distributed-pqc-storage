@@ -16,7 +16,7 @@ RUN go mod download || go mod download || go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o hydrastore .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o distributed-pqc-storage .
 
 # Final stage
 FROM alpine:latest
@@ -24,7 +24,7 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Copy the binary from the builder stage
-COPY --from=builder /app/hydrastore .
+COPY --from=builder /app/distributed-pqc-storage .
 
 # Run the binary
-ENTRYPOINT ["./hydrastore"]
+ENTRYPOINT ["./distributed-pqc-storage"]

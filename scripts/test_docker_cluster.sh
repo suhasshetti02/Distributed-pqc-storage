@@ -5,7 +5,7 @@ echo "Waiting for nodes to initialize..."
 sleep 5
 
 # Create a dummy test file
-echo "This is a test file for the HydraStore distributed cluster. Random: $RANDOM$RANDOM" > test_file.txt
+echo "This is a test file for the Distributed-pqc-storage distributed cluster. Random: $RANDOM$RANDOM" > test_file.txt
 
 echo "Authenticating as admin to get JWT..."
 LOGIN_RESP=$(curl -s -X POST -d "username=admin&password=adminpass" "http://localhost:8080/v1/auth/login")
@@ -36,7 +36,7 @@ echo "Waiting for replication to complete..."
 sleep 2
 
 echo "Deleting local copy from Node 1 to force network retrieval..."
-docker exec hydrastore_node1 rm -rf /root/node1_network/node1
+docker exec distributed-pqc-storage_node1 rm -rf /root/node1_network/node1
 
 echo "Downloading file from Node 1 (10.5.0.11:8080) - should fetch from network..."
 curl -s "http://localhost:8080/v1/files/test_file.txt" -H "Authorization: Bearer $JWT" > downloaded_file.txt

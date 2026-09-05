@@ -48,7 +48,7 @@ if ($dupResp.message -like "*deduplicated*") {
 
 # 5. DISASTER SIMULATION
 Write-Host "[4/5] Inducing Network Fault (Stopping 2 nodes)..." -ForegroundColor Yellow
-docker stop hydrastore_node1 hydrastore_node2
+docker stop distributed-pqc-storage_node1 distributed-pqc-storage_node2
 
 # 6. INTEGRITY VERIFICATION
 Write-Host "[5/5] Reconstructing All Media from Mesh..." -ForegroundColor Yellow
