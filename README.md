@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/project-banner.svg" width="100%" alt="Distributed PQC Storage project banner"/>
+  <img src="https://raw.githubusercontent.com/suhasshetti02/suhasshetti02/main/assets/projects/pqc-storage.svg" width="100%" alt="pqc-storage project banner"/>
 </div>
 
 ---
