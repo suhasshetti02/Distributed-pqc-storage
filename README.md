@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="./assets/project-banner.svg" width="100%" alt="Distributed PQC Storage project banner"/>
+</div>
+
+---
+
 # Distributed-pqc-storage: Post-Quantum Secure Distributed Storage Fabric
 
 [![Status: Production-Ready](https://img.shields.io/badge/Status-Production--Ready-success.svg)]()
