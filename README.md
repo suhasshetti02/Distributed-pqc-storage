@@ -1,94 +1,82 @@
-# Distributed-pqc-storage: Post-Quantum Secure Distributed Storage Fabric
+# Distributed PQC Storage — Distributed Storage Fabric Prototype
 
-[![Status: Production-Ready](https://img.shields.io/badge/Status-Production--Ready-success.svg)]()
-[![Security: ML-KEM-768](https://img.shields.io/badge/Security-ML--KEM--768-blue.svg)]()
-[![Resilience: Reed-Solomon 3+2](https://img.shields.io/badge/Resilience-RS--3%2B2-orange.svg)]()
+A Go-based distributed file-storage prototype that combines peer-to-peer TCP communication, Reed–Solomon erasure coding, AES-GCM encryption, a SQLite metadata store, and an ML-KEM / Kyber-768 key-establishment exchange.
 
-Distributed-pqc-storage is a zero-trust, self-healing distributed storage system designed to withstand the next generation of cryptographic and infrastructure threats. Built with Go and Docker, it provides high-availability storage with integrated **Post-Quantum Cryptography (PQC)** and autonomous **Self-Healing** capabilities.
+> **Project status:** Experimental prototype. Do not interpret the repository's “production-ready” badge or benchmark figures as an independent security or performance certification. The current default cluster launcher starts three local file servers, while the code's peer bootstrap logic is written around a four-peer target. Review the deployment topology before assuming a five-node cluster is being run.
 
-## 📐 System Architecture
+## Implemented components
 
-```mermaid
-graph TD
-    User([API Client]) -- "1. Upload File" --> GW[Node 1: Gateway]
-    GW -- "2. RS-Shard & Encrypt" --> Mesh{Mesh Fabric}
-    Mesh -- "3. Distribute Shards" --> N1[Node 1 Storage]
-    Mesh --> N2[Node 2 Storage]
-    Mesh --> N3[Node 3 Storage]
-    Mesh --> N4[Node 4 Storage]
-    Mesh --> N5[Node 5 Storage]
+- HTTP gateway with login, file upload/download routes, and cluster-state dashboard.
+- TCP peer transport and message handling.
+- File storage with content-addressed identifiers derived from SHA-256.
+- Reed–Solomon erasure coding helpers for shard creation and reconstruction.
+- AES-GCM encryption / decryption helpers.
+- CIRCL's Kyber-768 KEM API used for post-quantum shared-secret establishment.
+- SQLite-backed metadata store.
+- Periodic self-healing / shard-audit workflow and metadata gossip.
+- Docker Compose configuration for local services.
 
-    subgraph "Fabric Control Plane"
-        Audit[Audit Engine] -.->|Auto-Heal| Mesh
-        Gossip[Gossip Protocol] -.->|Sync Metadata| Mesh
-    end
+## Technology
 
-    style GW fill:#00f2fe,stroke:#333,stroke-width:2px,color:#000
-    style Mesh fill:#15171e,stroke:#00f2fe,stroke-dasharray: 5 5,color:#fff
-    style Audit fill:#00ff88,color:#000
+- Go (module declares Go 1.24).
+- TCP networking and custom message encoding.
+- CIRCL Kyber-768 KEM implementation.
+- AES-GCM and SHA-256.
+- Reed–Solomon library.
+- SQLite through `modernc.org/sqlite`.
+- Docker / Docker Compose.
+
+## Architecture overview
+
+```text
+Client
+  │ HTTP
+  ▼
+API gateway
+  │
+  ├── authentication / file metadata
+  └── file server
+        ├── peer TCP transport
+        ├── KEM-based shared-secret exchange
+        ├── AES-GCM protected shard messages
+        ├── Reed–Solomon shard distribution / recovery
+        ├── local disk storage
+        └── SQLite metadata + periodic audit / gossip
 ```
 
-## 🚀 Key Engineering Pillars
+The repository contains the gateway in `api_server.go`, peer file-server logic in `server.go`, storage in `store.go`, cryptographic helpers in `crypto.go`, and KEM exchange code under `p2p/`.
 
-### 1. Quantum-Resistant Security
-Distributed-pqc-storage is one of the few distributed fabrics implementing **ML-KEM-768** (formerly Kyber) for peer-to-peer handshakes. This ensures that current encrypted traffic is protected against future decryption by quantum computers (Harvest Now, Decrypt Later protection).
+## Run locally
 
-### 2. High-Availability (3+2 Reed-Solomon)
-Data is not simply "copied"—it is mathematically sharded. Using a 3+2 erasure coding scheme, every file is split into 3 data shards and 2 parity shards.
-*   **40% Fault Tolerance**: The system survives the simultaneous failure of any 2 nodes with zero data loss.
-*   **Mathematical Reconstruction**: Lost shards are regenerated in real-time using finite field arithmetic.
+Requirements: Go 1.24-compatible toolchain and Docker / Docker Compose for the container setup.
 
-### 3. Autonomous Self-Healing
-A background **Fabric Audit Engine** constantly monitors mesh health. If a node goes offline, the mesh automatically:
-1.  Detects missing shards.
-2.  Reconstructs them from surviving peers.
-3.  Re-distributes them to healthy nodes to restore 100% redundancy.
-
-### 4. Storage Efficiency (CAS)
-Native **Content-Aware Storage (CAS)** deduplicates files at the gateway level. If two users upload the same file under different names, Distributed-pqc-storage stores only one set of shards, significantly reducing infrastructure costs.
-
----
-
-## 📊 Verified Performance Metrics
-*Extracted from the [Performance Audit Suite](benchmark.ps1)*
-
-| Metric | Measured Value | Analysis |
-| :--- | :--- | :--- |
-| **Encoding Latency** | **6.7s** | 10MB payload (PQC Handshake + RS-Encoding + AES-GCM) |
-| **Recovery Latency** | **5.0s** | Full reconstruction from 60% node availability |
-| **Throughput** | **1.6 MB/s** | Distributed write speed across the mesh fabric |
-| **Resilience** | **3/5 Nodes** | Quorum maintained during 2-node catastrophic failure |
-
----
-
-## 🛠️ Quick Start
-
-### Prerequisites
-*   Docker & Docker Compose
-*   PowerShell (for testing suite)
-
-### Launch the Fabric
 ```bash
-# Spin up the 5-node mesh
-docker-compose up -d --build
+go mod download
+go test ./...
+go run . -mode=cluster
 ```
 
-### Run the Deep Audit
-```powershell
-# Verify deduplication, fault tolerance, and reconstruction
-.\test_system.ps1
-```
+The default API listener is `:8080`. The default cluster branch in `main.go` creates three file servers bound to ports 3000, 7000, and 5000. For a single node, use the `-mode=single`, `-node-id`, `-node-addr`, and `-bootstrap` flags. See `DOCS/OPERATIONS_GUIDE.md` and `docker-compose.yml` for deployment details.
 
-### Access Command Center
-Open your browser to `http://localhost:8080` to view the **Real-Time Mesh Heatmap** and storage audit.
+Set `DFS_MASTER_KEY` to the expected 32-byte key value for repeatable encryption across restarts. Without a valid configured key, the current code generates a temporary random key for a local demo; data encrypted with that temporary key may not be decryptable after restart. Set `DFS_API_KEY` to replace the development fallback used for API JWT configuration.
 
----
+## Repository documentation
 
-## 📂 Project Navigation
-*   **[ENGINEERING_DESIGN.md](DOCS/ENGINEERING_DESIGN.md)**: Deep dive into the cryptographic and mathematical architecture.
-*   **[OPERATIONS_GUIDE.md](DOCS/OPERATIONS_GUIDE.md)**: Full command reference and folder structure.
-*   **`server.go`**: Core P2P transport and Self-Healing engine.
-*   **`api_server.go`**: High-performance HTTP Gateway and Dashboard.
+- `DOCS/ENGINEERING_DESIGN.md` — design explanation.
+- `DOCS/OPERATIONS_GUIDE.md` — operational instructions.
+- `docker-compose.yml` — service topology.
+- `go.mod` — Go dependencies.
 
----
-**Distributed-pqc-storage** — *Resilience Through Mathematics. Security Through PQC.*
+## Security and correctness limitations
+
+- The KEM exchange in `p2p/handshake.go` establishes a shared secret but does not, by itself, authenticate the remote peer's identity. Do not describe it as mutually authenticated zero-trust transport without an additional identity/signature trust mechanism.
+- The handshake implementation should be reviewed for message framing, maximum node-ID length, protocol versioning, downgrade resistance, and peer authentication.
+- The default encryption key fallback is random and temporary. Configure a stable secret key securely for persistent data.
+- The API code includes a development fallback API key; production deployment must require strong configured secrets and enforce authentication on all sensitive endpoints.
+- The default local cluster launcher starts three servers, not an automatically provisioned five-node cluster.
+- The repository's performance claims should be treated as unverified unless the referenced benchmark scripts, workload, raw outputs, and environment are present and reproducible. The current tree does not include a complete automated benchmark suite.
+- No security audit or formal cryptographic review is included.
+
+## License
+
+See repository license and dependency licenses.
